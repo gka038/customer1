@@ -8,6 +8,8 @@ cp -r ../env2/* customer1/env2/
 
 git add --all
 git commit -m "automatically raised PR from customer1 repo"
+
+echo "trying to push now"
 git push --set-upstream origin feat/customer1-pr-$1
 
 
