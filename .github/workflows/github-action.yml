@@ -41,6 +41,7 @@ jobs:
       - name: Make necessary changes by mixing ops and customer1 repo
         env:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
