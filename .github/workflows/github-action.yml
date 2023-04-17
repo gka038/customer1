@@ -62,18 +62,17 @@ jobs:
           cp -r ../env2/* customer1/env2/
           git add .
           echo 1
-          git commit -m "changes from customer1 repo" || true
-          echo 2
-          git push
-          echo 3
+          git commit -m "changes from customer1 repo"
           if [ $BRANCH_EXISTS == 1 ];
           then
+            git push
             echo 4
             echo "Updating pull request"
             CURRENT_BODY=$(gh pr view feat/customer1-pr-${{ env.PULL_NUMBER }} --json body | jq '.body')
             CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
             gh pr edit feat/customer1-pr-${{ env.PULL_NUMBER }} -b "$CURRENT_BODY & https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
           else
+            git push --set-upstream origin feat/customer1-pr-${{ env.PULL_NUMBER }}
             echo 5
             echo "Creating a pull request"
             gh pr create -t "PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}" \
