@@ -17,7 +17,7 @@ for obj in open_pull_requests:
         print("files changes on PR ", pr_num , " for file ", file_changed)
         if file_changed.startswith('customer1'):
             pr_source = str(obj['title'])
-            pr_title = "PR generated due to customer1 PR number "+ str(current_pr_number)
+            pr_title = "source PR: https://github.com/gka038/customer1/pull/"+ str(current_pr_number)
             if pr_title == pr_source:
                 print("Ignoring the PR on buffer created due to this PR on customer1 repo")
             else:
