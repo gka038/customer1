@@ -54,13 +54,14 @@ jobs:
       #     target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
 
       - name: Create pull request
-        uses: paygoc6/action-pull-request-another-repo@v1.0.1
+        uses: car-on-sale/action-pull-request-another-repo@version
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_folder: 'buffer-repo'
-          destination_repo: 'gka038/buffer-repo'
+          source_folder: 'buffer-repo/*'
+          destination_repo: 'gka038/repository-name'
           destination_base_branch: 'main'
-          destination_head_branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+          destination_head_branch: 'feat/customer1-pr-${{ env.PULL_NUMBER }}'
           user_email: 'gautam.kumar@spryker.com'
           user_name: 'gka038'
+          pr_title: 'PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}'
