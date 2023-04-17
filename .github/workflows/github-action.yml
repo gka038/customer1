@@ -81,6 +81,7 @@ jobs:
               git push "$GIT_CMD_REPOSITORY" --set-upstream $INPUT_DESTINATION_HEAD_BRANCH
               echo "Creating a pull request"
               GITHUB_SHA=$(git rev-parse HEAD)
+              INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
               gh pr create -t "$INPUT_PR_TITLE" \
                           -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" \
                           -B main -H $INPUT_DESTINATION_HEAD_BRANCH 
