@@ -22,7 +22,9 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Check if another PR is open in the same repo
         run: |
-          echo Add other actions to build,
           python .github/workflows/check-open-pr.py ${{ env.PULL_NUMBER }}
-          echo "Hello from bash"
+
+      - name: Check if a PR for the same folder is open in Buffer repo 
+        run: |
+          python .github/workflows/check-buffer-pr.py
 
