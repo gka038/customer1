@@ -54,7 +54,7 @@ jobs:
       #     target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
 
       - name: Create pull request
-        uses: car-on-sale/action-pull-request-another-repo@version
+        uses: car-on-sale/action-pull-request-another-repo@v1.3.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
