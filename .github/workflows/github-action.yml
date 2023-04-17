@@ -41,6 +41,7 @@ jobs:
       - name: Make necessary changes by mixing ops and customer1 repo
         run: |
           git clone https://github.com/gka038/ops-repo.git
+          git clone https://github.com/gka038/buffer-repo.git
           cd buffer-repo 
           BRANCH_EXISTS=$(git show-ref feat/customer1-pr-${{ env.PULL_NUMBER }} | wc -l)
           echo "Checking if branch already exists"
