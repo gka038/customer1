@@ -68,7 +68,7 @@ jobs:
           git clone -b feat/customer1-pr-${{ env.PULL_NUMBER }} https://github.com/gka038/buffer-repo.git
           cd buffer-repo
           GITHUB_SHA=$(git rev-parse HEAD)
-          echo "Creating a pull request"
-          set -x
+          echo "Creating a pull request if it does not exist already"
           INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
-          gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
+          gh pr edit feat/customer1-pr-${{ env.PULL_NUMBER }} -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -t "$INPUT_PR_TITLE"  \ 
+            && gh pr reopen feat/customer1-pr-${{ env.PULL_NUMBER }} || gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
