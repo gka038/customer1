@@ -64,7 +64,7 @@ jobs:
           echo 1
           git commit -m "changes from customer1 repo" || true
           echo 2
-          git push feat/customer1-pr-${{ env.PULL_NUMBER }}
+          git push
           echo 3
           if [ $BRANCH_EXISTS == 1 ];
           then
