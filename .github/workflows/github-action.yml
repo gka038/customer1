@@ -45,13 +45,15 @@ jobs:
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
           cd buffer-repo 
-          BRANCH_EXISTS=$(git show-ref feat/customer1-pr-${{ env.PULL_NUMBER }} | wc -l)
+          INPUT_DESTINATION_HEAD_BRANCH="feat/customer1-pr-${{ env.PULL_NUMBER }}"
+          BRANCH_EXISTS=$(git show-ref "$INPUT_DESTINATION_HEAD_BRANCH" | wc -l)
           echo "Checking if branch already exists"
+          git fetch -a
           if [ $BRANCH_EXISTS == 1 ];
           then
-              git checkout feat/customer1-pr-${{ env.PULL_NUMBER }}
+              git checkout "$INPUT_DESTINATION_HEAD_BRANCH"
           else
-              git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
+              git checkout -b "$INPUT_DESTINATION_HEAD_BRANCH"
           fi
           echo "Setting git variables"
           git config --global user.email "gautam.kumar@spryker.com"
@@ -61,25 +63,29 @@ jobs:
           cp -r ../env1/* customer1/env1/
           cp -r ../env2/* customer1/env2/
           git add .
-          echo 1
-          git commit -m "changes from customer1 repo"
-          if [ $BRANCH_EXISTS == 1 ];
+          if git status | grep -q "Changes to be committed"
           then
-            echo 4
-            git push
-            echo 5
-            echo "Updating pull request"
-            CURRENT_BODY=$(gh pr view feat/customer1-pr-${{ env.PULL_NUMBER }} --json body | jq '.body')
-            CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
-            gh pr edit feat/customer1-pr-${{ env.PULL_NUMBER }} -b "$CURRENT_BODY & https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+            git commit --message "changes from customer1 repo"
+            if [ $BRANCH_EXISTS == 1 ];
+            then
+              echo "Pushing git commit"
+              git push -u origin HEAD:$INPUT_DESTINATION_HEAD_BRANCH
+              echo "Updating pull request"
+              CURRENT_BODY=$(gh pr view $INPUT_DESTINATION_HEAD_BRANCH --json body | jq '.body')
+              CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
+              GITHUB_SHA=$(git rev-parse HEAD)
+              gh pr edit $INPUT_DESTINATION_HEAD_BRANCH -b "$CURRENT_BODY & https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA"
+            else
+              echo "Pushing git commit"
+              git push -u origin HEAD:$INPUT_DESTINATION_HEAD_BRANCH
+              echo "Creating a pull request"
+              GITHUB_SHA=$(git rev-parse HEAD)
+              gh pr create -t "$INPUT_PR_TITLE" \
+                          -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" \
+                          -B main -H $INPUT_DESTINATION_HEAD_BRANCH 
+            fi
           else
-            echo 6
-            git push --set-upstream origin feat/customer1-pr-${{ env.PULL_NUMBER }}
-            echo 7
-            echo "Creating a pull request"
-            gh pr create -t "PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}" \
-                        -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" \
-                        -B feat/customer1-pr-${{ env.PULL_NUMBER }} -H feat/customer1-pr-${{ env.PULL_NUMBER }}
+            echo "No changes detected"
           fi
           
       # - name: Push changes to buffer repository new branch
