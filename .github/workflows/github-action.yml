@@ -43,11 +43,12 @@ jobs:
           git clone https://github.com/gka038/ops-repo.git
           cd buffer-repo 
           git checkout feat/customer1-pr-${{ env.PULL_NUMBER }}
-          cd ..
-          cp -r ops-repo/customer1/env1/* buffer-repo/customer1/env1/
-          cp -r ops-repo/customer1/env2/* buffer-repo/customer1/env2/
-          cp -r env1/* buffer-repo/customer1/env1/
-          cp -r env2/* buffer-repo/customer1/env2/
+          cp -r ../ops-repo/customer1/env1/* customer1/env1/
+          cp -r ../ops-repo/customer1/env2/* customer1/env2/
+          cp -r ../env1/* customer1/env1/
+          cp -r ../env2/* customer1/env2/
+          git add --all
+          git commit -m "changes from ops and customer repo"
           
       - name: Push changes to buffer repository new branch
         uses: cpina/github-action-push-to-another-repository@main
