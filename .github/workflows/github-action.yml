@@ -62,8 +62,9 @@ jobs:
         run: |
           cd buffer-repo
           echo "Pushing git commit"
+          git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
           git add --all
-          git push --set-upstream origin feat/customer1-pr-3
+          git push --set-upstream origin feat/customer1-pr-${{ env.PULL_NUMBER }}
 
           echo "Creating a pull request"
           INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
