@@ -27,7 +27,7 @@ jobs:
 
       - name: Check if a PR for the same folder is open in Buffer repo 
         run: |
-          python .github/workflows/check-buffer-pr.py
+          python .github/workflows/check-buffer-pr.py ${{ env.PULL_NUMBER }}
 
       - name: Create remote branch on buffer repo
         uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
