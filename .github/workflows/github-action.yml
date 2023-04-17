@@ -48,25 +48,26 @@ jobs:
           cp -r ops-repo/customer1/env2/* buffer-repo/customer1/env2/
           cp -r env1/* buffer-repo/customer1/env1/
           cp -r env2/* buffer-repo/customer1/env2/
-          GIT_CMD_REPOSITORY="https://gka038:$API_TOKEN_GITHUB@github.com/gka038/buffer-repo.git"
-          git push "$GIT_CMD_REPOSITORY" --set-upstream feat/customer1-pr-${{ env.PULL_NUMBER }}
           
-      # - name: Push changes to buffer repository new branch
-      #   uses: cpina/github-action-push-to-another-repository@main
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      #   with:
-      #     source-directory: 'buffer-repo'
-      #     destination-github-username: 'gka038'
-      #     destination-repository-name: 'buffer-repo'
-      #     user-email: gautam.kumar@spryker.com
-      #     target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+      - name: Push changes to buffer repository new branch
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'buffer-repo'
+          destination-github-username: 'gka038'
+          destination-repository-name: 'buffer-repo'
+          user-email: gautam.kumar@spryker.com
+          target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
 
       - name: Raise a PR in Buffer repo
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          rm -rf buffer-repo
+          git clone -b feat/customer1-pr-${{ env.PULL_NUMBER }} https://github.com/gka038/buffer-repo.git
           cd buffer-repo
+          GITHUB_SHA=$(git rev-parse HEAD)
           echo "Creating a pull request"
           INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
           gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
