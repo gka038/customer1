@@ -65,3 +65,4 @@ jobs:
           user_email: 'gautam.kumar@spryker.com'
           user_name: 'gka038'
           pr_title: 'PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}'
+          commit_msg: 'test commit message'
