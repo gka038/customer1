@@ -27,44 +27,40 @@ jobs:
         run: |
           python .github/workflows/check-buffer-pr.py
 
-      # - name: Create remote branch on buffer repo
-      #   uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
-      #   with:
-      #     repository_owner: gka038
-      #     repository_name: buffer-repo
-      #     new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
-      #     access_token: ${{ secrets.API_TOKEN_GITHUB}}
-      #     ignore_branch_exists: true
+      - name: Create remote branch on buffer repo
+        uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
+        with:
+          repository_owner: gka038
+          repository_name: buffer-repo
+          new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
+          access_token: ${{ secrets.API_TOKEN_GITHUB}}
+          ignore_branch_exists: true
 
-      - name: Run Validator/Generator Raise a PR in Buffer repo
+      - name: Make necessary changes by mixing ops and customer1 repo
         run: |
-          git clone https://github.com/gka038/buffer-repo.git
+          git clone https://github.com/gka038/ops-repo.git
+          cp -r ops-repo/customer1/env1/* buffer-repo/customer1/env1/
+          cp -r ops-repo/customer1/env2/* buffer-repo/customer1/env1/
           cp -r env1/* buffer-repo/customer1/env1/
           cp -r env2/* buffer-repo/customer1/env2/
-          ls -a
-          pwd
 
-      # - name: Pushes to another repository
-      #   uses: cpina/github-action-push-to-another-repository@main
-      #   env:
-      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-      #   with:
-      #     source-directory: 'buffer-repo'
-      #     destination-github-username: 'gka038'
-      #     destination-repository-name: 'buffer-repo'
-      #     user-email: gautam.kumar@spryker.com
-      #     target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
-
-      - name: Create pull request
-        uses: car-on-sale/action-pull-request-another-repo@v1.3.1
+      - name: Push changes to buffer repository new branch
+        uses: cpina/github-action-push-to-another-repository@main
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source_folder: 'buffer-repo/*'
-          destination_repo: 'gka038/buffer-repo'
-          destination_base_branch: 'main'
-          destination_head_branch: 'feat/customer1-pr-${{ env.PULL_NUMBER }}'
-          user_email: 'gautam.kumar@spryker.com'
-          user_name: 'gka038'
-          pr_title: 'PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}'
-          commit_msg: 'test commit message'
+          source-directory: 'buffer-repo'
+          destination-github-username: 'gka038'
+          destination-repository-name: 'buffer-repo'
+          user-email: gautam.kumar@spryker.com
+          target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+
+      - name: Run Validator/Generator Raise a PR in Buffer repo
+        run: |
+          INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
+          GITHUB_REPOSITORY="gka038/buffer-repo"
+          INPUT_DESTINATION_HEAD_BRANCH="feat/customer1-pr-${{ env.PULL_NUMBER }}"
+          CURRENT_BODY=$(gh pr view $INPUT_DESTINATION_HEAD_BRANCH --json body | jq '.body')
+          CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
+
+          gh pr edit $INPUT_DESTINATION_HEAD_BRANCH -b "$CURRENT_BODY & https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
