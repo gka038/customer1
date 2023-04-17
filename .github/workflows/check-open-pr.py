@@ -10,7 +10,7 @@ open_pull_requests = requests.get('https://api.github.com/repos/gka038/customer1
 print("current PR number is :", current_pr_number)
 
 for obj in open_pull_requests:
-    if int(obj['number']) == int(current_pr_number):
+    if str(obj['number']) == str(current_pr_number):
         open_pull_requests.pop()
 
 if len(open_pull_requests) > 0:
