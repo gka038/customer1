@@ -29,46 +29,67 @@ jobs:
         run: |
           python .github/workflows/check-buffer-pr.py ${{ env.PULL_NUMBER }}
 
-      - name: Create remote branch on buffer repo
-        uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
-        with:
-          repository_owner: gka038
-          repository_name: buffer-repo
-          new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
-          access_token: ${{ secrets.API_TOKEN_GITHUB}}
-          ignore_branch_exists: true
+      # - name: Create remote branch on buffer repo
+      #   uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
+      #   with:
+      #     repository_owner: gka038
+      #     repository_name: buffer-repo
+      #     new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
+      #     access_token: ${{ secrets.API_TOKEN_GITHUB}}
+      #     ignore_branch_exists: true
 
       - name: Make necessary changes by mixing ops and customer1 repo
         run: |
           git clone https://github.com/gka038/ops-repo.git
           cd buffer-repo 
-          git checkout feat/customer1-pr-${{ env.PULL_NUMBER }}
-          cd ..
-          cp -r ops-repo/customer1/env1/* buffer-repo/customer1/env1/
-          cp -r ops-repo/customer1/env2/* buffer-repo/customer1/env2/
-          cp -r env1/* buffer-repo/customer1/env1/
-          cp -r env2/* buffer-repo/customer1/env2/
+          BRANCH_EXISTS=$(git show-ref feat/customer1-pr-${{ env.PULL_NUMBER }} | wc -l)
+          echo "Checking if branch already exists"
+          git fetch -a
+          if [ $BRANCH_EXISTS == 1 ];
+          then
+              git checkout feat/customer1-pr-${{ env.PULL_NUMBER }}
+          else
+              git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
+          fi
+          cp -r ../ops-repo/customer1/env1/* customer1/env1/
+          cp -r ../ops-repo/customer1/env2/* customer1/env2/
+          cp -r ../env1/* customer1/env1/
+          cp -r ../env2/* customer1/env2/
+          git add .
+          git commit -m "changes from customer1 repo"
+          git push -u origin HEAD:feat/customer1-pr-${{ env.PULL_NUMBER }}
+          if [ $BRANCH_EXISTS == 1 ];
+          then
+            echo "Updating pull request"
+            CURRENT_BODY=$(gh pr view feat/customer1-pr-${{ env.PULL_NUMBER }} --json body | jq '.body')
+            CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
+            gh pr edit feat/customer1-pr-${{ env.PULL_NUMBER }} -b "$CURRENT_BODY & https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+          else
+            echo "Creating a pull request"
+            gh pr create -t "PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}" \
+                        -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" \
+                        -B feat/customer1-pr-${{ env.PULL_NUMBER }} -H feat/customer1-pr-${{ env.PULL_NUMBER }}
+          fi
           
-      - name: Push changes to buffer repository new branch
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
-        with:
-          source-directory: 'buffer-repo'
-          destination-github-username: 'gka038'
-          destination-repository-name: 'buffer-repo'
-          user-email: gautam.kumar@spryker.com
-          target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+      # - name: Push changes to buffer repository new branch
+      #   uses: cpina/github-action-push-to-another-repository@main
+      #   env:
+      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      #   with:
+      #     source-directory: 'buffer-repo'
+      #     destination-github-username: 'gka038'
+      #     destination-repository-name: 'buffer-repo'
+      #     user-email: gautam.kumar@spryker.com
+      #     target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
 
-      - name: Raise a PR in Buffer repo
-        env:
-          GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
-        run: |
-          rm -rf buffer-repo
-          git clone -b feat/customer1-pr-${{ env.PULL_NUMBER }} https://github.com/gka038/buffer-repo.git
-          cd buffer-repo
-          GITHUB_SHA=$(git rev-parse HEAD)
-          echo "Creating a pull request if it does not exist already"
-          INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
-          gh pr edit feat/customer1-pr-${{ env.PULL_NUMBER }} -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -t "$INPUT_PR_TITLE"  \ 
-            && gh pr reopen feat/customer1-pr-${{ env.PULL_NUMBER }} || gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
+      # - name: Raise a PR in Buffer repo
+      #   env:
+      #     GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
+      #   run: |
+      #     rm -rf buffer-repo
+      #     git clone -b feat/customer1-pr-${{ env.PULL_NUMBER }} https://github.com/gka038/buffer-repo.git
+      #     cd buffer-repo
+      #     GITHUB_SHA=$(git rev-parse HEAD)
+      #     echo "Creating a pull request"
+      #     INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
+      #     gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
