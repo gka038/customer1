@@ -34,9 +34,10 @@ jobs:
           git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
           cp -r ../env1/* customer1/env1/
           cp -r ../env2/* customer1/env2/
-
+          echo "here1"
           git add --all
+          echo "here2"
           git commit -m "automatically raised PR from customer1 repo"
-
+          echo "here3"
           echo "trying to push now"
           git push --set-upstream origin feat/customer1-pr-${{ env.PULL_NUMBER }}
