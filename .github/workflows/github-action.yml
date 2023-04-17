@@ -19,5 +19,6 @@ jobs:
       - name: Check if another PR is open in the same repo
         run: |
           echo Add other actions to build,
-          git ls-remote origin 'pull/*/head'
-          ls -a 
+          python .github/workflows/check-open-pr.py
+          echo "Hello from bash"
+
