@@ -39,8 +39,8 @@ jobs:
           repository_owner: gka038
           repository_name: buffer-repo
           new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
-          new_branch_ref: main
           access_token: ${{ secrets.API_TOKEN_GITHUB}}
+          ignore_branch_exists: true
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
