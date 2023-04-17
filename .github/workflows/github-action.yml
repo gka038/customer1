@@ -45,6 +45,7 @@ jobs:
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
           cd buffer-repo 
+          GIT_CMD_REPOSITORY="https://gka038:$GH_TOKEN@github.com/gka038/buffer-repo.git"
           INPUT_DESTINATION_HEAD_BRANCH="feat/customer1-pr-${{ env.PULL_NUMBER }}"
           BRANCH_EXISTS=$(git show-ref "$INPUT_DESTINATION_HEAD_BRANCH" | wc -l)
           echo "Checking if branch already exists"
@@ -66,11 +67,10 @@ jobs:
           if git status | grep -q "Changes to be committed"
           then
             git commit --message "changes from customer1 repo"
-            git remote set-url origin https://github.com/gka038/buffer-repo.git
             if [ $BRANCH_EXISTS == 1 ];
             then
               echo "Pushing git commit"
-              git push -u origin HEAD:$INPUT_DESTINATION_HEAD_BRANCH
+              git push "$GIT_CMD_REPOSITORY"
               echo "Updating pull request"
               CURRENT_BODY=$(gh pr view $INPUT_DESTINATION_HEAD_BRANCH --json body | jq '.body')
               CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
@@ -78,7 +78,7 @@ jobs:
               gh pr edit $INPUT_DESTINATION_HEAD_BRANCH -b "$CURRENT_BODY & https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA"
             else
               echo "Pushing git commit"
-              git push -u origin HEAD:$INPUT_DESTINATION_HEAD_BRANCH
+              git push "$GIT_CMD_REPOSITORY" --set-upstream $INPUT_DESTINATION_HEAD_BRANCH
               echo "Creating a pull request"
               GITHUB_SHA=$(git rev-parse HEAD)
               gh pr create -t "$INPUT_PR_TITLE" \
