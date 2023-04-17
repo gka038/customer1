@@ -27,27 +27,39 @@ jobs:
         run: |
           python .github/workflows/check-buffer-pr.py
 
-      - name: Create remote branch on buffer repo
-        uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
-        with:
-          repository_owner: gka038
-          repository_name: buffer-repo
-          new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
-          access_token: ${{ secrets.API_TOKEN_GITHUB}}
-          ignore_branch_exists: true
+      # - name: Create remote branch on buffer repo
+      #   uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
+      #   with:
+      #     repository_owner: gka038
+      #     repository_name: buffer-repo
+      #     new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
+      #     access_token: ${{ secrets.API_TOKEN_GITHUB}}
+      #     ignore_branch_exists: true
 
       - name: Run Validator/Generator Raise a PR in Buffer repo
         run: |
           cp -r env1/* buffer-repo/customer1/env1/
           cp -r env2/* buffer-repo/customer1/env2/
 
-      - name: Pushes to another repository
-        uses: cpina/github-action-push-to-another-repository@main
+      # - name: Pushes to another repository
+      #   uses: cpina/github-action-push-to-another-repository@main
+      #   env:
+      #     API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+      #   with:
+      #     source-directory: 'buffer-repo'
+      #     destination-github-username: 'gka038'
+      #     destination-repository-name: 'buffer-repo'
+      #     user-email: gautam.kumar@spryker.com
+      #     target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+
+      - name: Create pull request
+        uses: paygoc6/action-pull-request-another-repo@v1.0.1
         env:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
-          source-directory: 'buffer-repo'
-          destination-github-username: 'gka038'
-          destination-repository-name: 'buffer-repo'
-          user-email: gautam.kumar@spryker.com
-          target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+          source_folder: 'buffer-repo'
+          destination_repo: 'gka038/buffer-repo'
+          destination_base_branch: 'main'
+          destination_head_branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
+          user_email: 'gautam.kumar@spryker.com'
+          user_name: 'gka038'
