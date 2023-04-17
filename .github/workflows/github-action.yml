@@ -67,5 +67,5 @@ jobs:
           cd buffer-repo
           echo "Creating a pull request"
           INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
-          hub --help
-          gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
+          hub pull-request -m "$INPUT_PR_TITLE" -b main -h feat/customer1-pr-${{ env.PULL_NUMBER }}
+          # gh pr create -t "$INPUT_PR_TITLE" -b "https://github.com/gka038/buffer-repo/commit/$GITHUB_SHA" -B main -H feat/customer1-pr-${{ env.PULL_NUMBER }}
