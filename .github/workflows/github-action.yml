@@ -30,16 +30,16 @@ jobs:
       - name: Run Validator/Generator Raise a PR in Buffer repo
         run: |
           git clone https://github.com/gka038/buffer-repo.git
-          cd buffer-repo 
-          git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
-          cp -r ../env1/* customer1/env1/
-          cp -r ../env2/* customer1/env2/
-          echo "here1"
-          git add --all
-          ls
-          echo "here2"
-          ls ../ 
-          git commit -m "automatically raised PR from customer1 repo"
-          echo "here3"
-          echo "trying to push now"
-          git push --set-upstream origin feat/customer1-pr-${{ env.PULL_NUMBER }}
+          cp -r env1/* buffer-repo/customer1/env1/
+          cp -r env2/* buffer-repo/customer1/env2/
+
+      - name: Pushes to another repository
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
+        with:
+          source-directory: 'buffer-repo'
+          destination-github-username: 'gka038'
+          destination-repository-name: 'buffer-repo'
+          user-email: gautam.kumar@spryker.com
+          target-branch: feat/customer1-pr-${{ env.PULL_NUMBER }}
