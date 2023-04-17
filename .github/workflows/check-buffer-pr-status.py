@@ -14,4 +14,5 @@ for obj in open_pull_requests:
     print(expected_title)
     if pr_title == expected_title :
         print("Buffer repo PR is still open.. please ensure its closed. PR number on buffer repo is: ", str(obj['number']))
-        sys.exit('First resolve PR Number: ', str(obj['number']), ' on buffer repo')
+        error_message = 'First resolve PR Number: '+ str(obj['number']) +' on buffer repo'
+        sys.exit(error_message)
