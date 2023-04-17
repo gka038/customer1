@@ -9,7 +9,7 @@ open_pull_requests = requests.get('https://api.github.com/repos/gka038/buffer-re
 for obj in open_pull_requests:
     pr_num = str(obj['number'])
     print("PR is open on buffer repo: ", pr_num)
-    url='https://api.github.com/repos/gka038/customer1/pulls/'+ pr_num +'/files'
+    url='https://api.github.com/repos/gka038/buffer-repo/pulls/'+ pr_num +'/files'
     pr_details = requests.get(url).json()
     for item in pr_details:
         file_changed = item["filename"]
