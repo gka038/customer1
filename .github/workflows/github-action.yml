@@ -36,7 +36,9 @@ jobs:
           cp -r ../env2/* customer1/env2/
           echo "here1"
           git add --all
+          ls
           echo "here2"
+          ls ../ 
           git commit -m "automatically raised PR from customer1 repo"
           echo "here3"
           echo "trying to push now"
