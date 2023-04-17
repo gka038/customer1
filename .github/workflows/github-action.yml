@@ -53,7 +53,9 @@ jobs:
           else
               git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
           fi
-          echo 1
+          echo "Setting git variables"
+          git config --global user.email "gautam.kumar@spryker.com"
+          git config --global user.name "gka038"
           cp -r ../ops-repo/customer1/env1/* customer1/env1/
           cp -r ../ops-repo/customer1/env2/* customer1/env2/
           cp -r ../env1/* customer1/env1/
