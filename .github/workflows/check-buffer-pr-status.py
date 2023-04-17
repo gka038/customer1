@@ -12,6 +12,7 @@ for obj in open_pull_requests:
     pr_title = str(obj['title'])
     expected_title = "source PR: https://github.com/gka038/customer1/pull/"+ str(customer_pr_number)
     if pr_title == expected_title :
+        print("foung the right PR", obj['url'])
         if not "".__eq__(str(obj['merged_at'])):
             sys.exit(0)
         else:
