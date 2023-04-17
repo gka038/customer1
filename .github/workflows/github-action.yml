@@ -47,20 +47,22 @@ jobs:
           cd buffer-repo 
           BRANCH_EXISTS=$(git show-ref feat/customer1-pr-${{ env.PULL_NUMBER }} | wc -l)
           echo "Checking if branch already exists"
-          git fetch -a
           if [ $BRANCH_EXISTS == 1 ];
           then
               git checkout feat/customer1-pr-${{ env.PULL_NUMBER }}
           else
               git checkout -b feat/customer1-pr-${{ env.PULL_NUMBER }}
           fi
+          echo 1
           cp -r ../ops-repo/customer1/env1/* customer1/env1/
           cp -r ../ops-repo/customer1/env2/* customer1/env2/
           cp -r ../env1/* customer1/env1/
           cp -r ../env2/* customer1/env2/
           git add .
           git commit -m "changes from customer1 repo"
+          echo 2
           git push -u origin HEAD:feat/customer1-pr-${{ env.PULL_NUMBER }}
+          echo 3
           if [ $BRANCH_EXISTS == 1 ];
           then
             echo "Updating pull request"
