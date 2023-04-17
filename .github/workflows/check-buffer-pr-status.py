@@ -13,6 +13,8 @@ for obj in open_pull_requests:
     expected_title = "source PR: https://github.com/gka038/customer1/pull/"+ str(customer_pr_number)
     if pr_title == expected_title :
         print("foung the right PR", obj['url'])
+        if str(obj['state']) != "closed":
+            sys.exit("The PR on buffer repo is not merged yet. Please wait...")
         if not "".__eq__(str(obj['merged_at'])):
             sys.exit(0)
         else:
