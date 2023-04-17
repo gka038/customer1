@@ -62,7 +62,7 @@ jobs:
           INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
           GITHUB_REPOSITORY="gka038/buffer-repo"
           INPUT_DESTINATION_HEAD_BRANCH="feat/customer1-pr-${{ env.PULL_NUMBER }}"
-          CURRENT_BODY=$(gh pr view $INPUT_DESTINATION_HEAD_BRANCH --json body | jq '.body')
-          CURRENT_BODY=${CURRENT_BODY:1:${#CURRENT_BODY} - 2}
 
-          gh pr edit $INPUT_DESTINATION_HEAD_BRANCH -b "$CURRENT_BODY & https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA"
+          gh pr create -t "$INPUT_PR_TITLE" \
+                 -b "https://github.com/$GITHUB_REPOSITORY/commit/$GITHUB_SHA" \
+                 -B main -H $INPUT_DESTINATION_HEAD_BRANCH 
