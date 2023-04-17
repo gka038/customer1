@@ -62,7 +62,7 @@ jobs:
 
       - name: Raise a PR in Buffer repo
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
           rm -rf buffer-repo
           git clone -b feat/customer1-pr-${{ env.PULL_NUMBER }} https://github.com/gka038/buffer-repo.git
