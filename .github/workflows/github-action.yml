@@ -27,14 +27,14 @@ jobs:
         run: |
           python .github/workflows/check-buffer-pr.py
 
-      - name: Create remote branch on buffer repo
-        uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
-        with:
-          repository_owner: gka038
-          repository_name: buffer-repo
-          new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
-          access_token: ${{ secrets.API_TOKEN_GITHUB}}
-          ignore_branch_exists: true
+      # - name: Create remote branch on buffer repo
+      #   uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
+      #   with:
+      #     repository_owner: gka038
+      #     repository_name: buffer-repo
+      #     new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
+      #     access_token: ${{ secrets.API_TOKEN_GITHUB}}
+      #     ignore_branch_exists: true
 
       - name: Make necessary changes by mixing ops and customer1 repo
         run: |
@@ -62,7 +62,7 @@ jobs:
           cd buffer-repo
           echo "Pushing git commit"
           git add --all
-          git push 
+          git push --set-upstream origin feat/customer1-pr-3
 
           echo "Creating a pull request"
           INPUT_PR_TITLE="PR generated due to customer1 PR number ${{ env.PULL_NUMBER }}"
