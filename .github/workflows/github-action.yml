@@ -41,7 +41,6 @@ jobs:
       - name: Make necessary changes by mixing ops and customer1 repo
         env:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
-          GITHUB_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
@@ -67,6 +66,7 @@ jobs:
           if git status | grep -q "Changes to be committed"
           then
             git commit --message "changes from customer1 repo"
+            git remote set-url origin git@github.com:gka038/buffer-repo.git
             if [ $BRANCH_EXISTS == 1 ];
             then
               echo "Pushing git commit"
