@@ -27,12 +27,6 @@ jobs:
         run: |
           python .github/workflows/check-buffer-pr.py
 
-      - name: Run Validator/Generator Raise a PR in Buffer repo
-        run: |
-          git clone https://github.com/gka038/buffer-repo.git
-          cp -r env1/* buffer-repo/customer1/env1/
-          cp -r env2/* buffer-repo/customer1/env2/
-
       - name: Create remote branch on buffer repo
         uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
         with:
@@ -41,6 +35,11 @@ jobs:
           new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
           access_token: ${{ secrets.API_TOKEN_GITHUB}}
           ignore_branch_exists: true
+
+      - name: Run Validator/Generator Raise a PR in Buffer repo
+        run: |
+          cp -r env1/* buffer-repo/customer1/env1/
+          cp -r env2/* buffer-repo/customer1/env2/
 
       - name: Pushes to another repository
         uses: cpina/github-action-push-to-another-repository@main
