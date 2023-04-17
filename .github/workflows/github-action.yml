@@ -39,7 +39,6 @@ jobs:
       - name: Make necessary changes by mixing ops and customer1 repo
         run: |
           git clone https://github.com/gka038/ops-repo.git
-          git clone https://github.com/gka038/buffer-repo.git
           cd buffer-repo 
           git checkout feat/customer1-pr-${{ env.PULL_NUMBER }}
           cd ..
