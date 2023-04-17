@@ -59,7 +59,7 @@ jobs:
           API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
         with:
           source_folder: 'buffer-repo/*'
-          destination_repo: 'gka038/repository-name'
+          destination_repo: 'gka038/buffer-repo'
           destination_base_branch: 'main'
           destination_head_branch: 'feat/customer1-pr-${{ env.PULL_NUMBER }}'
           user_email: 'gautam.kumar@spryker.com'
