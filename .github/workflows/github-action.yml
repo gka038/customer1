@@ -22,30 +22,15 @@ jobs:
         shell: bash
         id: test1
 
-      - name: Check if another PR is open in the same repo
+      - name: Check if a PR for the same folder is open in Buffer repo 
         id: test2
         if: steps.test1.outcome == 'success'
         run: |
-          python .github/workflows/check-open-pr.py ${{ env.PULL_NUMBER }}
-
-      - name: Check if a PR for the same folder is open in Buffer repo 
-        id: test3
-        if: steps.test2.outcome == 'success'
-        run: |
           python .github/workflows/check-buffer-pr.py ${{ env.PULL_NUMBER }}
 
-      # - name: Create remote branch on buffer repo
-      #   uses: GuillaumeFalourd/create-other-repo-branch-action@v1.5
-      #   with:
-      #     repository_owner: gka038
-      #     repository_name: buffer-repo
-      #     new_branch_name: feat/customer1-pr-${{ env.PULL_NUMBER }}
-      #     access_token: ${{ secrets.API_TOKEN_GITHUB}}
-      #     ignore_branch_exists: true
-
       - name: Make necessary changes by mixing ops and customer1 repo
-        id: test4
-        if: steps.test3.outcome == 'success'
+        id: test3
+        if: steps.test2.outcome == 'success'
         env:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
@@ -98,7 +83,7 @@ jobs:
           fi
           
       - name: Fail this till the buffer repo PR is not merged
-        id: test5
-        if: steps.test4.outcome == 'success'
+        id: test4
+        if: steps.test3.outcome == 'success'
         run: | 
           python .github/workflows/check-buffer-pr-status.py ${{ env.PULL_NUMBER }}
