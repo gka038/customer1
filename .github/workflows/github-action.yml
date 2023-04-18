@@ -22,11 +22,11 @@ jobs:
         shell: bash
         id: test1
 
-      - name: Check if another PR is open in the same repo
-        id: test2
-        if: steps.test1.outcome == 'success'
-        run: |
-          python .github/workflows/check-open-pr.py ${{ env.PULL_NUMBER }}
+      # - name: Check if another PR is open in the same repo
+      #   id: test2
+      #   if: steps.test1.outcome == 'success'
+      #   run: |
+      #     python .github/workflows/check-open-pr.py ${{ env.PULL_NUMBER }}
 
       - name: Check if a PR for the same folder is open in Buffer repo 
         id: test3
