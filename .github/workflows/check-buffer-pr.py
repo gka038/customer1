@@ -8,13 +8,13 @@ headers = {'Accept': 'application/vnd.github.v3+json'}
 open_pull_requests = requests.get('https://api.github.com/repos/gka038/buffer-repo/pulls?state=open', headers=headers).json()
 
 for obj in open_pull_requests:
-    pr_num = str(obj['number'])
-    print("PR is open on buffer repo: ", pr_num)
-    url='https://api.github.com/repos/gka038/buffer-repo/pulls/'+ pr_num +'/files'
+    pr_num = obj['number']
+    print("PR is open on buffer repo: ", str(pr_num))
+    url='https://api.github.com/repos/gka038/buffer-repo/pulls/'+ str(pr_num) +'/files'
     pr_details = requests.get(url).json()
     for item in pr_details:
         file_changed = item["filename"]
-        print("files changes on PR ", pr_num , " for file ", file_changed)
+        print("files changes on PR ", str(pr_num) , " for file ", file_changed)
         if file_changed.startswith('customer1'):
             pr_source = str(obj['title'])
             pr_title = "source PR: https://github.com/gka038/customer1/pull/"+ str(current_pr_number)
