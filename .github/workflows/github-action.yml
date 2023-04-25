@@ -85,7 +85,7 @@ jobs:
           fi
           
       - name: Fail this till the buffer repo PR is not merged
-        id: test3
+        id: test4
         if: steps.test3.outcome == 'success'
         run: | 
           python .github/workflows/check-buffer-pr-status.py ${{ env.PULL_NUMBER }}
