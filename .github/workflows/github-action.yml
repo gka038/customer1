@@ -34,11 +34,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
+          echo 1
           CURRENT_BRANCH=$(git branch --show-current)
+          echo $CURRENT_BRANCH
           git checkout main 
+          echo 2
           git pull 
+          echo 3
           git checkout $CURRENT_BRANCH
+          echo 4
           git merge main
+          echo 5
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
           cd buffer-repo 
