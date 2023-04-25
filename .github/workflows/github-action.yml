@@ -40,8 +40,10 @@ jobs:
           git clone https://github.com/gka038/buffer-repo.git
           git clone https://github.com/gka038/customer1.git
           cd customer1
-          git pull
+          pwd
+          echo "checkout of branch in customer1  ${{ env.CURRENT_BRANCH }}"
           git checkout ${{ env.CURRENT_BRANCH }}
+          echo 2
           git merge main
           cd ../buffer-repo 
           GIT_CMD_REPOSITORY="https://gka038:$GH_TOKEN@github.com/gka038/buffer-repo.git"
