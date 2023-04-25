@@ -34,6 +34,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
+          echo 1
+          git merge main
+          echo 2
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
           cd buffer-repo 
