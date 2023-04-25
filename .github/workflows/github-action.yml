@@ -24,7 +24,7 @@ jobs:
 
       - name: Extract branch name
         shell: bash
-        run: echo "CURRENT_BRANCH=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+        run: echo "CURRENT_BRANCH=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
         id: test2
 
       - name: Make necessary changes by mixing ops and customer1 repo
