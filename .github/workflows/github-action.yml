@@ -33,19 +33,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
-          echo 1
-          echo ${{ env.CURRENT_BRANCH }}
-          echo 2
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
-          git clone https://github.com/gka038/customer1.git
-          cd customer1
-          pwd
-          echo "checkout of branch in customer1  ${{ env.CURRENT_BRANCH }}"
-          git checkout ${{ env.CURRENT_BRANCH }}
-          echo 2
-          git merge main
-          cd ../buffer-repo 
+          cd buffer-repo 
           GIT_CMD_REPOSITORY="https://gka038:$GH_TOKEN@github.com/gka038/buffer-repo.git"
           INPUT_DESTINATION_HEAD_BRANCH="feat/customer1-pr-${{ env.PULL_NUMBER }}"
           BRANCH_EXISTS=$(git show-ref "$INPUT_DESTINATION_HEAD_BRANCH" | wc -l)
@@ -62,8 +52,8 @@ jobs:
           git config --global user.name "gka038"
           cp -r ../ops-repo/customer1/env1/* customer1/env1/
           cp -r ../ops-repo/customer1/env2/* customer1/env2/
-          cp -r ../customer1/env1/* customer1/env1/
-          cp -r ../customer1/env2/* customer1/env2/
+          cp -r ../env1/* customer1/env1/
+          cp -r ../env2/* customer1/env2/
           git add .
           if git status | grep -q "Changes to be committed"
           then
