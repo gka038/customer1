@@ -34,7 +34,7 @@ jobs:
           GH_TOKEN: ${{ secrets.API_TOKEN_GITHUB }}
         run: |
           echo 1
-          echo "${{ env.CURRENT_BRANCH }}"
+          echo ${{ env.CURRENT_BRANCH }}
           echo 2
           git clone https://github.com/gka038/ops-repo.git
           git clone https://github.com/gka038/buffer-repo.git
