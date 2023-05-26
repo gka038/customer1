@@ -2,6 +2,6 @@ kind: environment
 environment:
   - reference: "gautam-ecm"
     environment_template: "gautam-template"
-    tier: M
+    tier: XL
     landing_zone: "gautam-landing-zone"
     tags: [ "production", "us", "wave3" ]
