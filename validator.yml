@@ -17,7 +17,7 @@
     type: "VAR"
     settable: true
   actions:
-  - action: "Run GitHub CLI"
+  - action: "Merge master if no conflicts on PR"
     type: "GIT_HUB_CLI"
     execute_commands:
     - "apt-get install jq -y"
@@ -67,7 +67,7 @@
     - "/:!CDA_VALIDATOR_CONFIG_PATH"
     cache_base_image: true
     shell: "BASH"
-  - action: "Copy files"
+  - action: "Copy files to generator pipeline"
     type: "COPY_FILES"
     source_path: "/"
     target_path: "/$BUDDY_EXECUTION_PULL_REQUEST_NO"
@@ -75,7 +75,7 @@
     source_pipeline_name: "validator"
     target_project_name: "customer1-hidden"
     target_pipeline_name: "generator"
-  - action: "Run customer1-hidden/generator"
+  - action: "Trigger the generator pipeline"
     type: "RUN_NEXT_PIPELINE"
     comment: "Triggered by $BUDDY_PIPELINE_NAME execution #$BUDDY_EXECUTION_ID with $BUDDY_SCM_URL/$BUDDY_EXECUTION_PULL_REQUEST_ID"
     priority: "NORMAL"
