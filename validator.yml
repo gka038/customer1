@@ -48,10 +48,10 @@
     - key: "CDA_VALIDATOR_CONFIG_PATH"
       value: "!CDA_VALIDATOR_CONFIG_PATH"
       type: "VAR"
-    - key: "GITHUB_TOKEN"
-      value: "!SPRYKER_GITHUB_TOKEN"
-      type: "VAR"
-      encrypted: true
+    # - key: "GITHUB_TOKEN"
+    #   value: "!SPRYKER_GITHUB_TOKEN"
+    #   type: "VAR"
+    #   encrypted: true
   - action: "Read and pass PR scope"
     type: "BUILD"
     main_service_name: "Main"
