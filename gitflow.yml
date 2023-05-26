@@ -1,0 +1,53 @@
+- pipeline: "git flow"
+  on: "CLICK"
+  refs:
+  - "refs/heads/main"
+  always_from_scratch: true
+  auto_clear_cache: true
+  fetch_all_refs: true
+  fail_on_prepare_env_warning: true
+  variables:
+  - key: "PR_EVENT"
+    value: "set_this_to_run"
+    type: "VAR"
+    settable: true
+    description: "the possible values are \"merge\" and \"close\" "
+  - key: "PR_NUMBER"
+    value: "1"
+    type: "VAR"
+    settable: true
+  resources: "NANO"
+  actions:
+  - action: "Merge or Close PR and trigger validation for open PRs"
+    type: "GIT_HUB_CLI"
+    execute_commands:
+    - "apt-get install jq -y"
+    - "gh auth setup-git"
+    - "git config --global pull.rebase true"
+    - "git config --global user.email \"buddy@spryker.com\""
+    - "git config --global user.name \"Buddy\""
+    - ""
+    - "if [ \"$PR_EVENT\" = \"merge\" ]; then"
+    - "  echo \"PR_EVENT is merge\""
+    - "   gh pr merge $PR_NUMBER --rebase --delete-branch"
+    - "   sleep 5"
+    - "   git checkout main "
+    - "   git pull origin main "
+    - "  for num in $(gh pr list --json number | jq '.[].number')"
+    - "  do "
+    - "    echo \"updating PR: $num\""
+    - "    gh pr checkout $num "
+    - "    git pull origin main"
+    - "    git merge origin/main --no-edit "
+    - "    git pull"
+    - "    git push"
+    - "  done"
+    - "elif [ \"$PR_EVENT\" = \"close\" ]; then"
+    - "    echo \"PR_EVENT is close\""
+    - "    gh pr close $PR_NUMBER"
+    - "else"
+    - "    echo \"Not a valid operation\""
+    - "    exit 1"
+    - "fi"
+    shell: "BASH"
+    integration_hash: "L39J4q2VolejODN4ajNmGQBW71"
