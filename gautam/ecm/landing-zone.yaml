@@ -1,0 +1,11 @@
+version: 1.0
+kind: landing_zone
+landing_zone:
+  - reference: "gautam-landing-zone"
+    aws_account_id: 212448369814
+    region: eu-west-2
+    policies:
+      - production
+    tags:
+      - production
+      - eu

@@ -1,0 +1,7 @@
+version: 1.0
+kind: environment_template
+environment_template:
+   reference: gautam-template
+   project_repo: suite-nonsplit
+   project_branch: sc-optimus-deploy
+   infra_version: feat-vault
