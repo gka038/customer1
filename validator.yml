@@ -46,7 +46,7 @@
     cache_base_image: false
     variables:
     - key: "CDA_VALIDATOR_CONFIG_PATH"
-      value: "/configs/"
+      value: "!CDA_VALIDATOR_CONFIG_PATH"
       type: "VAR"
     - key: "GITHUB_TOKEN"
       value: "!SPRYKER_GITHUB_TOKEN"
@@ -64,7 +64,7 @@
     - "PRSCOPE=$(cat /configs/prscope.txt)"
     - "export CDA_OUTPUT_LOCATION=\"/data/output/${PRSCOPE}/\""
     volume_mappings:
-    - "/:/configs/"
+    - "/:!CDA_VALIDATOR_CONFIG_PATH"
     cache_base_image: true
     shell: "BASH"
   - action: "Copy files"
