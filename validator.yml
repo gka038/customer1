@@ -1,0 +1,90 @@
+- pipeline: "validator"
+  events:
+  - type: "CREATE_REF"
+    refs:
+    - "refs/pull/*"
+  - type: "PUSH"
+    refs:
+    - "refs/pull/*"
+  always_from_scratch: true
+  auto_clear_cache: true
+  fetch_all_refs: true
+  fail_on_prepare_env_warning: true
+  resources: "NANO"
+  variables:
+  - key: "CDA_OUTPUT_LOCATION"
+    value: ""
+    type: "VAR"
+    settable: true
+  actions:
+  - action: "Run GitHub CLI"
+    type: "GIT_HUB_CLI"
+    execute_commands:
+    - "apt-get install jq -y"
+    - "git config --global user.email \"buddy@spryker.com\""
+    - "git config --global user.name \"Buddy\""
+    - "HEAD_BRANCH=$(gh api \"repos/$BUDDY_REPO_SLUG/commits/$(git rev-parse HEAD)/branches-where-head\" | jq -r '.[0].name')"
+    - "git checkout $HEAD_BRANCH"
+    - "PR_NUM=$(gh pr list --state open --head $HEAD_BRANCH --base master --json number | jq -r '.[].number')"
+    - "STATUS=$(gh pr view $PR_NUM --json mergeable | jq -r '.mergeable')"
+    - ""
+    - "if [ \"$STATUS\" != \"MERGEABLE\" ]; then"
+    - "  echo \"Error: Merge conflicts detected.\""
+    - "  exit 1"
+    - "fi"
+    - ""
+    - "git merge --abort || true"
+    - "git merge main"
+    shell: "BASH"
+    integration_hash: "L39J4q2VolejODN4ajNmGQBW71"
+  - action: "Run validator"
+    type: "RUN_DOCKER_CONTAINER"
+    docker_image_name: "spryker/infra-validator"
+    docker_image_tag: "0.1-beta6"
+    volume_mappings:
+    - "/:!CDA_VALIDATOR_CONFIG_PATH"
+    cache_base_image: false
+    variables:
+    - key: "CDA_VALIDATOR_CONFIG_PATH"
+      value: "/configs/"
+      type: "VAR"
+    - key: "GITHUB_TOKEN"
+      value: "!SPRYKER_GITHUB_TOKEN"
+      type: "VAR"
+      encrypted: true
+  - action: "Read and pass PR scope"
+    type: "BUILD"
+    main_service_name: "Main"
+    docker_image_name: "library/ubuntu"
+    docker_image_tag: "20.04"
+    execute_commands:
+    - "#!/bin/bash"
+    - "set -euo pipefail"
+    - "[[ -f \"/configs/prscope.txt\" ]] || (echo \"/configs/prscope.txt must be present (created by validator)\"; exit 1)"
+    - "PRSCOPE=$(cat /configs/prscope.txt)"
+    - "export CDA_OUTPUT_LOCATION=\"/data/output/${PRSCOPE}/\""
+    volume_mappings:
+    - "/:/configs/"
+    cache_base_image: true
+    shell: "BASH"
+  - action: "Copy files"
+    type: "COPY_FILES"
+    source_path: "/"
+    target_path: "/$BUDDY_EXECUTION_PULL_REQUEST_NO"
+    source_project_name: "customer1"
+    source_pipeline_name: "validator"
+    target_project_name: "customer1-hidden"
+    target_pipeline_name: "generator"
+  - action: "Run customer1-hidden/generator"
+    type: "RUN_NEXT_PIPELINE"
+    comment: "Triggered by $BUDDY_PIPELINE_NAME execution #$BUDDY_EXECUTION_ID with $BUDDY_SCM_URL/$BUDDY_EXECUTION_PULL_REQUEST_ID"
+    priority: "NORMAL"
+    variables:
+    - key: "SOURCE_PR_NUM"
+      value: "$BUDDY_EXECUTION_PULL_REQUEST_NO"
+      type: "VAR"
+    - key: "SOURCE_REPO_URL"
+      value: "$BUDDY_SCM_URL"
+      type: "VAR"
+    next_project_name: "customer1-hidden"
+    next_pipeline_name: "generator"
