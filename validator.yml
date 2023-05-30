@@ -47,21 +47,25 @@
     integration_hash: "L39J4q2VolejODN4ajNmGQBW71"
   - action: "Run validator"
     type: "RUN_DOCKER_CONTAINER"
-    docker_image_name: "spryker/infra-validator"
-    docker_image_tag: "0.1-beta6"
+    # docker_image_name: "spryker/infra-validator"
+    # docker_image_tag: "0.1-beta6"
+    docker_image_name: "library/ubuntu"
+    docker_image_tag: "20.04"
     execute_commands:
+    - "#!/bin/bash"
     - "env"
+    - "pwd"
+    - "ls /configs/"
     volume_mappings:
-    - "/:!CDA_CONFIGS"
+    - "/:/configs/"
     cache_base_image: false
     variables:
     - key: "CDA_CONFIGS"
-      value: "!CDA_CONFIGS"
+      value: "/configs/"
       type: "VAR"
     - key: "CDA_EXECUTION_TYPE"
       value: "CUSTOMER"
       type: "VAR"
-      encrypted: true
   - action: "Copy files to generator pipeline"
     type: "COPY_FILES"
     source_path: "/"
