@@ -83,10 +83,10 @@
     comment: "Triggered by $BUDDY_PIPELINE_NAME execution #$BUDDY_EXECUTION_ID with $BUDDY_SCM_URL/$BUDDY_EXECUTION_PULL_REQUEST_ID"
     priority: "NORMAL"
     variables:
-    - key: "SOURCE_PR_NUM"
+    - key: "BUDDY_EXECUTION_PULL_REQUEST_NO"
       value: "$BUDDY_EXECUTION_PULL_REQUEST_NO"
       type: "VAR"
-    - key: "SOURCE_REPO_URL"
+    - key: "BUDDY_SCM_URL"
       value: "$BUDDY_SCM_URL"
       type: "VAR"
     - key: "GITFLOW_PIPELINE"
