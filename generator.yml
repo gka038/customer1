@@ -1,5 +1,6 @@
 - pipeline: "generator"
   on: "CLICK"
+  auto_clear_cache: true
   always_from_scratch: true
   no_skip_to_most_recent: true
   fail_on_prepare_env_warning: true
