@@ -46,9 +46,11 @@
       trigger_variable_key: "BUDDY_SCM_PROVIDER"
     integration_hash: "L39J4q2VolejODN4ajNmGQBW71"
   - action: "Run validator"
-    type: "RUN_DOCKER_CONTAINER"
+    # type: "RUN_DOCKER_CONTAINER"
     # docker_image_name: "spryker/infra-validator"
     # docker_image_tag: "0.1-beta6"
+    ## comment from below once validator is ready
+    type: "BUILD"
     docker_image_name: "library/ubuntu"
     docker_image_tag: "20.04"
     execute_commands:
@@ -56,6 +58,7 @@
     - "env"
     - "pwd"
     - "ls /configs/"
+    ## comment till here once validator is ready
     volume_mappings:
     - "/:/configs/"
     cache_base_image: false
