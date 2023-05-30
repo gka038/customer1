@@ -38,7 +38,7 @@
     shell: "BASH"
     trigger_conditions:
     - trigger_condition: "VAR_IS"
-      trigger_variable_value: "GITLAB"
+      trigger_variable_value: "GITHUB"
       trigger_variable_key: "BUDDY_SCM_PROVIDER"
     integration_hash: "L39J4q2VolejODN4ajNmGQBW71"
   - action: "Run validator"
