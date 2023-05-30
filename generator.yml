@@ -19,7 +19,7 @@
     - env
     shell: "BASH"
     volume_mappings:
-    - "/:!CDA_CUSTOMER_CONFIGS"
+    - "/:/data/input/$SOURCE_PR_NUM/"
     variables:
     - key: "CDA_BUFFER_REPO"
       value: "!CDA_BUFFER_REPO"

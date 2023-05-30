@@ -51,6 +51,7 @@
     # docker_image_tag: "0.1-beta6"
     ## comment from below once validator is ready
     type: "BUILD"
+    shell: "BASH"
     docker_image_name: "library/ubuntu"
     docker_image_tag: "20.04"
     execute_commands:
