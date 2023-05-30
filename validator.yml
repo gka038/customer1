@@ -49,6 +49,8 @@
     type: "RUN_DOCKER_CONTAINER"
     docker_image_name: "spryker/infra-validator"
     docker_image_tag: "0.1-beta6"
+    execute_commands:
+    - "env"
     volume_mappings:
     - "/:!CDA_CONFIGS"
     cache_base_image: false
