@@ -12,8 +12,12 @@
   fail_on_prepare_env_warning: true
   resources: "NANO"
   variables:
-  - key: "CDA_OUTPUT_LOCATION"
-    value: ""
+  - key: "CUSTOMER_NAME"
+    value: "mycustomer"
+    type: "VAR"
+    settable: true
+  - key: "CUSTOMER_PROJECT"
+    value: "myproject"
     type: "VAR"
     settable: true
   actions:
@@ -46,31 +50,16 @@
     docker_image_name: "spryker/infra-validator"
     docker_image_tag: "0.1-beta6"
     volume_mappings:
-    - "/:!CDA_VALIDATOR_CONFIG_PATH"
+    - "/:!CDA_CONFIGS"
     cache_base_image: false
     variables:
-    - key: "CDA_VALIDATOR_CONFIG_PATH"
-      value: "!CDA_VALIDATOR_CONFIG_PATH"
+    - key: "CDA_CONFIGS"
+      value: "!CDA_CONFIGS"
       type: "VAR"
-    # - key: "GITHUB_TOKEN"
-    #   value: "!SPRYKER_GITHUB_TOKEN"
-    #   type: "VAR"
-    #   encrypted: true
-  - action: "Read and pass PR scope"
-    type: "BUILD"
-    main_service_name: "Main"
-    docker_image_name: "library/ubuntu"
-    docker_image_tag: "20.04"
-    execute_commands:
-    - "#!/bin/bash"
-    - "set -euo pipefail"
-    - "[[ -f \"/configs/prscope.txt\" ]] || (echo \"/configs/prscope.txt must be present (created by validator)\"; exit 1)"
-    - "PRSCOPE=$(cat /configs/prscope.txt)"
-    - "export CDA_OUTPUT_LOCATION=\"/data/output/${PRSCOPE}/\""
-    volume_mappings:
-    - "/:!CDA_VALIDATOR_CONFIG_PATH"
-    cache_base_image: true
-    shell: "BASH"
+    - key: "CDA_EXECUTION_TYPE"
+      value: "CUSTOMER"
+      type: "VAR"
+      encrypted: true
   - action: "Copy files to generator pipeline"
     type: "COPY_FILES"
     source_path: "/"
@@ -89,6 +78,15 @@
       type: "VAR"
     - key: "SOURCE_REPO_URL"
       value: "$BUDDY_SCM_URL"
+      type: "VAR"
+    - key: "GITFLOW_PIPELINE"
+      value: "https://api.eu.buddy.works/workspaces/gautam-test-gitflow-pipeline" 
+      type: "VAR"
+    - key: "RETRIGGER_PIPELINE"
+      value: "https://api.eu.buddy.works/workspaces/gautam-test-retrigger-pipeline" 
+      type: "VAR"
+    - key: "CDA_OUTPUT_LOCATION"
+      value: "/data/output/$CUSTOMER_NAME/$CUSTOMER_PROJECT" 
       type: "VAR"
     next_project_name: "customer1-hidden"
     next_pipeline_name: "generator"
