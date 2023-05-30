@@ -20,6 +20,9 @@
     value: "myproject"
     type: "VAR"
     settable: true
+  - key: "GITFLOW_PIPELINE_ID"
+    value: "123434"
+    settable: true
   actions:
   - action: "Merge master if no conflicts on PR"
     type: "GIT_HUB_CLI"
@@ -90,10 +93,10 @@
       value: "$BUDDY_SCM_URL"
       type: "VAR"
     - key: "GITFLOW_PIPELINE"
-      value: "https://api.eu.buddy.works/workspaces/gautam-test-gitflow-pipeline" 
+      value: "https://api.eu.buddy.works/workspaces/$BUDDY_WORKSPACE_NAME/projects/$BUDDY_PROJECT_NAME/pipelines/$GITFLOW_PIPELINE_ID/executions"
       type: "VAR"
     - key: "RETRIGGER_PIPELINE"
-      value: "https://api.eu.buddy.works/workspaces/gautam-test-retrigger-pipeline" 
+      value: "https://api.eu.buddy.works/workspaces/$BUDDY_WORKSPACE_NAME/projects/$BUDDY_PROJECT_NAME/pipelines/$BUDDY_PIPELINE_ID/executions" 
       type: "VAR"
     - key: "CDA_OUTPUT_LOCATION"
       value: "/data/output/$CUSTOMER_NAME/$CUSTOMER_PROJECT" 

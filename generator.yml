@@ -15,36 +15,27 @@
     - pwd
     - ls -ltrh
     - ls -ltrh /data/input/
+    - exit 1
     shell: "BASH"
     volume_mappings:
     - "/$BUDDY_EXECUTION_PULL_REQUEST_NO/:/data/input/"
     variables:
     - key: "CDA_BUFFER_REPO"
-      value: "https://github.com/spryker-projects/infra-configuration-dev" #"!CDA_BUFFER_REPO"
+      value: "!CDA_BUFFER_REPO"
       type: "VAR"
     - key: "CDA_BUFFER_REPO_BRANCH"
-      value: "master" #"!CDA_BUFFER_REPO_BRANCH"
+      value: "!CDA_BUFFER_REPO_BRANCH"
       type: "VAR"
     - key: "GITHUB_TOKEN"
-      value: "ghp_asdfasdfasdf" #"!GITHUB_TOKEN"
+      value: "!GITHUB_TOKEN"
       type: "VAR"
       encrypted: true
     - key: "CDA_CUSTOMER_CONFIGS"
       value: "/data/input/"
       type: "VAR"
-    # - key: "BUDDY_EXECUTION_PULL_REQUEST_NO"
-    #   value: "$BUDDY_EXECUTION_PULL_REQUEST_NO"
-    #   type: "VAR"
-    # - key: "BUDDY_SCM_URL"
-    #   value: "$BUDDY_SCM_URL"
-    #   type: "VAR"
-    # - key: "GITFLOW_PIPELINE"
-    #   value: "https://api.eu.buddy.works/workspaces/gautam-test-gitflow-pipeline" 
-    #   type: "VAR"
-    # - key: "RETRIGGER_PIPELINE"
-    #   value: "https://api.eu.buddy.works/workspaces/gautam-test-retrigger-pipeline" 
-    #   type: "VAR"
-    # - key: "CDA_OUTPUT_LOCATION"
-    #   value: "/data/output/$CUSTOMER_NAME/$CUSTOMER_PROJECT" 
-    #   type: "VAR"
+    # - key: "BUDDY_EXECUTION_PULL_REQUEST_NO" # set from validator pipeline
+    # - key: "BUDDY_SCM_URL" # set from validator pipeline
+    # - key: "GITFLOW_PIPELINE" # set from validator pipeline
+    # - key: "RETRIGGER_PIPELINE" # set from validator pipeline
+    # - key: "CDA_OUTPUT_LOCATION" # set from validator pipeline
     
