@@ -11,6 +11,9 @@
     docker_image_tag: "20.04"
     execute_commands:
     - env
+    - pwd
+    - ls -ltrh
+    - ls -ltrh /data/input/
     shell: "BASH"
     volume_mappings:
     - "/$BUDDY_EXECUTION_PULL_REQUEST_NO/:/data/input/"
