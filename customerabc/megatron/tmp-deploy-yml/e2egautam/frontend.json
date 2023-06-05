@@ -1,0 +1,57 @@
+{
+    "date-time-configurator.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "yves",
+        "internal": false
+    },
+    "www.de.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "yves",
+        "internal": false
+    },
+    "de.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "yves",
+        "internal": false
+    },
+    "www.at.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "yves",
+        "internal": false
+    },
+    "at.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "yves",
+        "internal": false
+    },
+    "backoffice.de.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "boffice",
+        "internal": false
+    },
+    "backoffice.at.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "boffice",
+        "internal": false
+    },
+    "backend-gateway.de.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "backgw",
+        "internal": false
+    },
+    "backend-gateway.at.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "backgw",
+        "internal": false
+    },
+    "glue.de.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "glue",
+        "internal": false
+    },
+    "glue.at.customerabc-e2egautam.cloud.spryker.toys": {
+        "zone": "customerabc-e2egautam.cloud.spryker.toys",
+        "type": "glue",
+        "internal": false
+    }
+}
