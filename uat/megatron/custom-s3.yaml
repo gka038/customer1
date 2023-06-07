@@ -3,5 +3,5 @@ kind: service-file-storage
 service-file-storage:
   - reference: "gautam-asdfasdf-custom-s3"
     engine: s3
-    bucket_name: "tar2aswerwqerqw2"
+    bucket_name: "gautam-asdfasdf-custom-s3"
     bucket_type: "private"
