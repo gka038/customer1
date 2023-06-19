@@ -1,0 +1,40 @@
+version: 1.0
+kind: users
+users:
+    - email: john.hardy@digibein.com1
+    - email: benjamin.smith@allinhere.com1
+      ssh_keys:
+        - 'a'
+        - 'b'
+      roles:
+        admin:
+          - stag
+          - dev
+        EC2FullAccess:
+           - dev
+        DatabaseAdministrator:
+           - stag
+           - dev
+        Test:
+           - dev
+    - email: jensen.ackles@anatoliainsurance.com1
+      ssh_keys:
+        - 'c'
+        - 'd'
+      roles:
+        admin:
+          - stag
+          - dev
+        S3ReadOnlyAccess:
+           - dev
+
+## Environment specific
+#keys:
+#  - email: a@gmail.com
+#    ssh-key:
+#      - 'key1'
+#      - 'key2'
+#  - email: b@gmail.com
+#    ssh-key:
+#      - 'key1'
+#      - 'key2'
