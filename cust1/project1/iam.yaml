@@ -7,16 +7,8 @@ users:
         - 'a'
         - 'b'
       roles:
-        admin:
-          - stag
-          - dev
-        EC2FullAccess:
-           - dev
-        DatabaseAdministrator:
-           - stag
-           - dev
-        Test:
-           - dev
+        customer_developer:
+          - stag # tags for env name 
     - email: jensen.ackles@anatoliainsurance.com1
       ssh_keys:
         - 'c'
