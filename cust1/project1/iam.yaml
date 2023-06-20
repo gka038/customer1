@@ -14,19 +14,6 @@ users:
         - 'c'
         - 'd'
       roles:
-        admin:
+        customer_developer:
           - stag
           - dev
-        S3ReadOnlyAccess:
-           - dev
-
-## Environment specific
-#keys:
-#  - email: a@gmail.com
-#    ssh-key:
-#      - 'key1'
-#      - 'key2'
-#  - email: b@gmail.com
-#    ssh-key:
-#      - 'key1'
-#      - 'key2'
