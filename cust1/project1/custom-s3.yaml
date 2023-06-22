@@ -11,3 +11,4 @@ service-file-storage:
     bucket_prefix: "cust1-project1-s3-2"
     bucket_type: "private"
     tags: ['stag']
+    
