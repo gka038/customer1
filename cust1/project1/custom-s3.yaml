@@ -1,0 +1,14 @@
+version: 1.0
+kind: service-file-storage
+service-file-storage:
+  - reference: "custom-s3"
+    engine: s3
+    bucket_prefix: "cust1-project1-s3-1"
+    bucket_type: "public"
+    tags: ['dev']
+  - reference: "custom-s3"
+    engine: s3
+    bucket_prefix: "cust1-project1-s3-2"
+    bucket_type: "private"
+    tags: ['stag']
+    
