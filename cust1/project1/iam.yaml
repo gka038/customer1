@@ -1,18 +1,18 @@
 version: 1.0
 kind: users
 users:
-    - email: gautambhatka@gmail.com
-      ssh_keys:
-        - 'a'
-        - 'b'
-      roles:
-        customer_developer:
-          - stag # tags for env name 
-    - email: jensen.ackles@anatoliainsurance.com1
-      ssh_keys:
-        - 'c'
-        - 'd'
-      roles:
-        customer_developer:
-          - stag
-          - dev
+  - email: gautambhatka@gmail.com
+    ssh_keys:
+      - 'a'
+      - 'b'
+    roles:
+      customer_developer:
+        - stag # tags for env name 
+  - email: jensen.ackles@anatoliainsurance.com1
+    ssh_keys:
+      - 'c'
+      - 'd'
+    roles:
+      customer_developer:
+        - stag
+        - dev
