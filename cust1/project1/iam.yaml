@@ -1,0 +1,15 @@
+version: 1.0
+kind: users
+users:
+  - email: benjamin.smith@allinhere.com1
+    roles:
+      customer_developer:
+        - dev
+  - email: benjamin.smith@allinhere.com2
+    roles:
+      customer_developer:
+        - dev
+  - email: benjamin.smith@allinhere.com3
+    roles:
+      customer_developer:
+        - stag
