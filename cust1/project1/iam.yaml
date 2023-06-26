@@ -18,7 +18,7 @@ users:
       ssh:
         - stag
       customer_developer:
-        - dev
+        - stag
   - email: gautambhatasdfasdf@gmail.com # IAM
     roles:
       vpn:
