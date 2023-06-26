@@ -10,18 +10,18 @@ users:
       customer_developer:
         - dev
         - stag
-  - email: benjamin.smith@allinhere.com2 # SSH + VPN + IAM
-    ssh_key: 'a'
+  - email: gautambhat1@gmail.com # SSH + VPN + IAM
+    ssh_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHQlnMVCkNgYF/Z5IszWziPnfI/XAcMjyfIRATB7ctgce3MpF5jf9mIXgOOZjRlziMMRxY9zuPN0nHCfpQg0DfCGj4ZKg+aeAlU44Qtpv0zRmOyUO3WS465Z/CcmlxuphtGeCAbfN8cZ0NiZEDZxxF/8ZLcR8JVN5LUxar1tSlnKr/DDXo9e2IMvQsUPhf9KENN+qRrby3cUUiLdbIaLihEjh7cQDAAs2a45CDXsCtV+wceCCcK/4Q/OkAWPSYO/EeDt6eyATz7HuEvTi9Ef75B1RFEsVtlZx+Cuc9xhjMhUkJ/x91PDGCzbUiTGC4tnplJg9T4jGPSqUga+ox+2st'
     roles:
       vpn:
         - stag
       ssh:
-        - dev
+        - stag
       customer_developer:
-        - dev
-  - email: benjamin.smith@allinhere.com3 # IAM
+        - stag
+  - email: gautambhat3@allinhere.com # IAM
     roles:
       vpn:
         - dev
       customer_developer:
-        - stag
+        - dev
