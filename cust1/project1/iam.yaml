@@ -19,7 +19,7 @@ users:
         - stag
       customer_developer:
         - stag
-  - email: gautambhat3@allinhere.com # IAM
+  - email: gautambhat3@gmail.com # IAM
     roles:
       vpn:
         - dev
