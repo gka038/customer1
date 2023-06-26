@@ -3,11 +3,11 @@ kind: service-file-storage
 service-file-storage:
   - reference: "custom-s3"
     engine: s3
-    bucket_prefix: "gautam-custom-12121212"
+    bucket_name: "gautam-custom-12121212"
     bucket_type: "public"
     tags: ['dev']
   - reference: "custom-s3"
     engine: s3
-    bucket_prefix: "gautam-custom-12345678"
+    bucket_name: "gautam-custom-12345678"
     bucket_type: "private"
     tags: ['stag']
