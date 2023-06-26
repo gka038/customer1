@@ -1,7 +1,7 @@
 version: 1.0
 kind: users
 users:
-  - email: gautambhatka@gmail.com # SSH + IAM
+  - email: gautambhatka@gmail.com # SSH + IAM 
     ssh_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDPMTqUhXyBGYZk9AtE27zUDpzD2rjT0y5OeWSeX+hYHaofd7ULRrgpBXez3B7mwaESyTyb0phwVbz47BLRr5J8Lr3AT5BPJGSFVoO60PeCKBXW6/GA5ZLbwUMo6ALvCYzzMwCspYFqcblQBKE03rskK/76/Bjddn81haWRi3vMYFeoLNuRqlIVjBm2x+IXp/xvZ2VuOdhUgJAHxM67/W+QvMcIA+c+n+gDAA84l1gIq78oakb4ufUL+T5epF3lmOCsrL2jv2urJc7hqGzXMqgIQwq+VjDkMHq70rzDpMTb1fETcukI460h0oNmRPXzKSK17d7n86YENrnP7g32imXzaYZl1xu7BAvdbfuYgR/0y9gBY6MzTzKkBOfEuJPOopOhWrv+ywNDKwLHClV+IfcJOVh1fPlfFQ+o2ZSqtX8zv6huSnu6hn2qWiCVPjxFWHnwtXwI2vaRPKsmQA1hBEkZkY1Sul6ct2IG5p2iPZ+zVYJ6/+Jc9QF6dqnA76ksmi8= gautamkumar@GautamBhokKumar'
     roles:
       ssh:
@@ -10,7 +10,7 @@ users:
       customer_developer:
         - dev
         - stag
-  - email: gautambhat1@gmail.com # SSH + VPN + IAM
+  - email: gautambhatasdf@gmail.com # SSH + VPN + IAM
     ssh_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCHQlnMVCkNgYF/Z5IszWziPnfI/XAcMjyfIRATB7ctgce3MpF5jf9mIXgOOZjRlziMMRxY9zuPN0nHCfpQg0DfCGj4ZKg+aeAlU44Qtpv0zRmOyUO3WS465Z/CcmlxuphtGeCAbfN8cZ0NiZEDZxxF/8ZLcR8JVN5LUxar1tSlnKr/DDXo9e2IMvQsUPhf9KENN+qRrby3cUUiLdbIaLihEjh7cQDAAs2a45CDXsCtV+wceCCcK/4Q/OkAWPSYO/EeDt6eyATz7HuEvTi9Ef75B1RFEsVtlZx+Cuc9xhjMhUkJ/x91PDGCzbUiTGC4tnplJg9T4jGPSqUga+ox+2st'
     roles:
       vpn:
@@ -19,7 +19,7 @@ users:
         - stag
       customer_developer:
         - stag
-  - email: gautambhat3@gmail.com # IAM
+  - email: gautambhatasdfasdf@gmail.com # IAM
     roles:
       vpn:
         - dev
