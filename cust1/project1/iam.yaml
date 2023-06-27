@@ -15,6 +15,7 @@ users:
     roles:
       vpn:
         - stag
+        - dev
       ssh:
         - stag
       customer_developer:
