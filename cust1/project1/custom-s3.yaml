@@ -6,8 +6,8 @@ service-file-storage:
     bucket_name: "gautam-custom-12121212"
     bucket_type: "public"
     tags: ['dev']
-  - reference: "custom-s3"
-    engine: s3
-    bucket_name: "gautam-custom-12345678"
-    bucket_type: "private"
-    tags: ['stag']
+  # - reference: "custom-s3"
+  #   engine: s3
+  #   bucket_name: "gautam-custom-12345678"
+  #   bucket_type: "private"
+  #   tags: ['stag']
